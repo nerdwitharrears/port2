@@ -174,11 +174,33 @@
   footer{color:var(--muted); text-align:center; padding:28px 0; border-top:1px solid rgba(255,255,255,.06)}
 
   /* Side rails off on mobile */
-  .side{position:fixed; bottom:0; display:flex; flex-direction:column; gap:16px; padding:0 10px}
-  .side::after{content:""; width:1px; height:90px; background:rgba(255,255,255,.18)}
-  .side-left{left:24px} .side-right{right:24px}
-  .side a{color:var(--muted)}
-  @media (max-width:900px){.side{display:none}}
+/* Side rails (desktop) */
+.side{position:fixed; bottom:0; display:flex; flex-direction:column; gap:16px; padding:0 10px}
+.side::after{content:""; width:1px; height:90px; background:rgba(255,255,255,.18)}
+.side-left{left:24px}
+.side-right{right:24px}
+.side a{color:var(--muted)}
+.social-icon{font-size:1.1rem}
+
+/* ✅ Mobile: show as centered bottom bar instead of hiding */
+@media (max-width:900px){
+  .side{ 
+    left:0; right:0; bottom:calc(12px + env(safe-area-inset-bottom));
+    margin:auto; width:max-content; padding:8px 12px;
+    flex-direction:row; gap:18px; align-items:center; justify-content:center;
+    background:color-mix(in oklab, var(--bg-2) 88%, transparent);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:999px; box-shadow:var(--shadow);
+    backdrop-filter:saturate(120%) blur(10px)
+  }
+  .side::after{display:none}
+  .side-left, .side-right{left:auto; right:auto}
+  .social-icon{font-size:1.25rem}
+  .side a{
+    width:44px; height:44px; display:grid; place-items:center; /* good tap target */
+  }
+}
+
 
   /* Accessibility */
   .sr-only{position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden}
