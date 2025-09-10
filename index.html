@@ -274,9 +274,25 @@
   <main id="main">
     <!-- HERO -->
     <section class="hero" id="home">
+      <style>
+        .hero .typed { position: relative; white-space: nowrap; }
+        .hero .cursor {
+          display:inline-block; width:.06em; margin-left:.06em;
+          background: currentColor; animation: blink 1s step-end infinite;
+          translate: 0 .08em;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        .hero .accent { color: var(--accent); }
+        @media (prefers-reduced-motion: reduce) {
+          .hero .cursor { animation: none; }
+        }
+      </style>
       <div class="wrap">
         <p class="overline">Data Science Tutor • Chennai</p>
-        <h1 class="headline">I help students turn math into machine learning.</h1>
+        <h1 class="headline">
+          I help students turn math into
+          <span class="typed accent" id="typed-target"></span><span class="cursor" aria-hidden="true"></span>.
+        </h1>
         <h2 class="subhead">Python • SQL • Power BI • ML — taught with projects, feedback, and mentorship.</h2>
         <p class="lede">I’ve trained <strong>5,000+ learners</strong> across colleges and academies. My students build dashboards, ship ML models, and crack interviews with confidence.</p>
         <div class="cta-row">
@@ -285,6 +301,29 @@
           <a class="btn" href="#contact">Talk to Me</a>
         </div>
         <p class="note">Next weekend cohort seats are limited. Early applicants get recordings + notes.</p>
+        <script>
+          const WORDS = ["machine learning", "deep learning", "data analytics"];
+          const TYPE_SPEED = 60;
+          const DELETE_SPEED = 45;
+          const HOLD_AFTER_TYPE = 1100;
+          const HOLD_AFTER_DELETE = 400;
+          (function(){
+            const el = document.getElementById("typed-target");
+            if(!el) return;
+            let i=0, j=0, deleting=false;
+            function tick(){
+              const word = WORDS[i];
+              el.textContent = word.slice(0, j);
+              if(!deleting && j < word.length){ j++; setTimeout(tick, TYPE_SPEED); }
+              else if(!deleting && j === word.length){ deleting = true; setTimeout(tick, HOLD_AFTER_TYPE); }
+              else if(deleting && j > 0){ j--; setTimeout(tick, DELETE_SPEED); }
+              else { deleting = false; i = (i+1) % WORDS.length; setTimeout(tick, HOLD_AFTER_DELETE); }
+            }
+            if("requestIdleCallback" in window) requestIdleCallback(tick);
+            else if(document.readyState === "complete") tick();
+            else window.addEventListener("load", tick);
+          })();
+        </script>
       </div>
     </section>
 
